@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    private float Speed = 1.5f;
+    private float Speed = 2.0f;
 
 	private void Awake()
 	{
@@ -14,6 +15,8 @@ public class PlayerController : MonoBehaviour
 	void Update()
     {
         TestMove();
+        if (Input.GetKeyUp(KeyCode.Space))
+            SceneManager.LoadScene("Fridge");
     }
 
     private void TestMove()
