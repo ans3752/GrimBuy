@@ -9,17 +9,27 @@ public class PlayerController : MonoBehaviour
 
 	private void Awake()
 	{
-        DontDestroyOnLoad(gameObject);	
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName=="OutDoor")
+		{
+            transform.position = PlayerRecord.GetInstance().OutDoorPosition;
+        }
+        else
+		{
+            transform.position = PlayerRecord.GetInstance().InStorePosition;
+        }
 	}
 
 	void Update()
     {
-        TestMove();
-        if (Input.GetKeyUp(KeyCode.Space))
+        print(PlayerRecord.GetInstance().OutDoorPosition);
+        Move();
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (Input.GetKeyUp(KeyCode.Space) && sceneName == "BasicStore")
             SceneManager.LoadScene("Fridge");
     }
 
-    private void TestMove()
+    private void Move()
 	{
         Vector3 movement = new Vector3(
             Input.GetAxis("Horizontal"),
@@ -29,4 +39,14 @@ public class PlayerController : MonoBehaviour
 
         transform.position += movement * Speed * Time.deltaTime;
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        print(other.transform.tag);
+        if (other.transform.tag == "Store")
+        {
+            Vector3 offset = new Vector3(0, 0, -1);
+            PlayerRecord.GetInstance().OutDoorPosition = transform.position + offset;
+        }
+    }
 }

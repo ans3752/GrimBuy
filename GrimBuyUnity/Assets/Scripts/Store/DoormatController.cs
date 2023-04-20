@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class DoormatController : MonoBehaviour
 {
-    public GameObject Player;
-
     void Awake()
     {
-        Player = GameObject.Find("Player");
-        float doormatX = transform.position.x;
-        float doormatZ = transform.position.z;
-        Player.transform.position = new Vector3(
-            doormatX,
-            Player.transform.position.y,
-            doormatZ
+        PlayerRecord.GetInstance().InStorePosition = new Vector3(
+            transform.position.x,
+            1.2f,
+            transform.position.z
             );
     }
 }
